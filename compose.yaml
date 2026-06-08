@@ -1,0 +1,54 @@
+services:
+
+  # Spring Boot application — built from local Dockerfile, tagged as demo-app
+  spring_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: demo-app
+    container_name: SpringBoot-application
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      - DB_HOST=MySQL-Database
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=123
+      - DB_NAME=mydatabase
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+
+  # Nginx reverse proxy
+  nginx-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: nginx-1
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - spring_app
+
+  # MySQL 8.4 database
+  mysql_db:
+    image: mysql:8.4
+    container_name: MySQL-Database
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=mydatabase
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
