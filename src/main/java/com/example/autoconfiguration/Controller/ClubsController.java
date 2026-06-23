@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.example.autoconfiguration.dto.ClubsDto;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -45,6 +46,21 @@ public class ClubsController {
 
         servicsClub.saveClub(club);
 
+        return "redirect:/clubs";
+    }
+
+    @GetMapping("/clubs/{clubId}/edit")
+    public String editClubForm(@PathVariable("clubId") Long clubId, Model model) {
+        ClubsDto club = servicsClub.findClubById(clubId);
+        model.addAttribute("club", club);
+        return "clubs.edit";
+    }
+
+    @PostMapping("/clubs/{clubId}/edit")
+    public String updateClub(@PathVariable("clubId") Long clubId,
+                             @ModelAttribute("club") ClubsDto club) {
+        club.setId(clubId);
+        servicsClub.updateClub(club);
         return "redirect:/clubs";
     }
 }

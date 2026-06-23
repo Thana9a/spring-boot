@@ -34,6 +34,32 @@ public class ServicsImpl implements ServicsClub {
         return clubRepository.save(club);
     }
 
+    @Override
+    public ClubsDto findClubById(long clubId) {
+        Clubs club = clubRepository.findById(clubId).get();
+        return mapToDtoClub(club);
+    }
+
+    @Override
+    public void updateClub(ClubsDto clubDto) {
+        Clubs club = clubRepository.findById(clubDto.getId()).orElseThrow(() -> new RuntimeException("Club not found"));
+        club.setTitle(clubDto.getTitle());
+        club.setDescription(clubDto.getDescription());
+        club.setEmail(clubDto.getEmail());
+        clubRepository.save(club);
+    }
+
+    private Clubs mapToClub(ClubsDto clubDto) {
+        return new Clubs(
+                clubDto.getId(),
+                clubDto.getTitle(),
+                clubDto.getDescription(),
+                clubDto.getEmail(),
+                clubDto.getUpdatedOn(),
+                clubDto.getCreatedOn()
+        );
+    }
+
     private ClubsDto mapToDtoClub(Clubs club) {
         return ClubsDto.builder()
                 .id(club.getId())
