@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ServicsClub {
         List<ClubsDto> findAllClubs();
+
+        Clubs saveClub(Clubs club);
 }

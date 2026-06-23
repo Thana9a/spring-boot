@@ -135,7 +135,7 @@
     <!-- Header / Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent pt-4">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/clubs}">
                 <span class="fs-4 me-2">⚽</span>
                 <span>Club Manager</span>
             </a>
@@ -158,8 +158,11 @@
                 This page is powered by <strong>Spring Boot</strong> and <strong>Thymeleaf</strong>. 
                 Assets are served statically from the local resource path using Bootstrap.
             </p>
-            <div class="mt-4">
+            <div class="mt-4 d-flex justify-content-center align-items-center gap-3 flex-wrap">
                 <span class="badge badge-count shadow-sm" th:text="${clubs.size()} + ' Clubs Registered'">0 Clubs Registered</span>
+                <a th:href="@{/clubs/new}" class="btn btn-primary rounded-pill px-4">
+                    Create New Club
+                </a>
             </div>
         </div>
 

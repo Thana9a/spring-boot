@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 public class ServicsImpl implements ServicsClub {
 
     private final ClubRepository clubRepository;
+    
 
-    @Autowired
     public ServicsImpl(ClubRepository clubRepository) {
         this.clubRepository = clubRepository;
     }
@@ -27,6 +27,11 @@ public class ServicsImpl implements ServicsClub {
         return clubs.stream()
                 .map(this::mapToDtoClub)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Clubs saveClub(Clubs club) {
+        return clubRepository.save(club);
     }
 
     private ClubsDto mapToDtoClub(Clubs club) {
@@ -40,5 +45,4 @@ public class ServicsImpl implements ServicsClub {
                 .build();
 
     }
-
 }
