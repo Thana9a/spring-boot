@@ -4,9 +4,7 @@ import com.example.autoconfiguration.Model.Clubs;
 import com.example.autoconfiguration.Repository.ClubRepository;
 import com.example.autoconfiguration.Service.ServicsClub;
 import com.example.autoconfiguration.dto.ClubsDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +13,6 @@ import java.util.stream.Collectors;
 public class ServicsImpl implements ServicsClub {
 
     private final ClubRepository clubRepository;
-    
 
     public ServicsImpl(ClubRepository clubRepository) {
         this.clubRepository = clubRepository;
@@ -23,8 +20,9 @@ public class ServicsImpl implements ServicsClub {
 
     @Override
     public List<ClubsDto> findAllClubs() {
-        List<Clubs > clubs = clubRepository.findAll();
-        return clubs.stream()
+        List<Clubs> clubs = clubRepository.findAll();// create obj array list(emty data) and then go run build in
+                                                     // methods to clubRepo findall() and then it assign to obj
+        return clubs.stream()// return
                 .map(this::mapToDtoClub)
                 .collect(Collectors.toList());
     }
@@ -34,30 +32,37 @@ public class ServicsImpl implements ServicsClub {
         return clubRepository.save(club);
     }
 
-    @Override
-    public ClubsDto findClubById(long clubId) {
+    @Override // this path is implement about the service here in kitchen have chef ready to
+              // cook for the meun
+    public ClubsDto findClubsById(Long clubId) {// here what it will be to retrive the data from database and it go to
+                                                // DTO
         Clubs club = clubRepository.findById(clubId).get();
         return mapToDtoClub(club);
     }
 
     @Override
+    public String validation(ClubsDto clubDto) {
+        if (clubDto.getTitle() == null || clubDto.getTitle().isEmpty()) {
+            return "Title is required";
+        }
+        if (clubDto.getDescription() == null || clubDto.getDescription().isEmpty()) {
+            return "Description is required";
+        }
+        if (clubDto.getEmail() == null || clubDto.getEmail().isEmpty()) {
+            return "Email is required";
+        }
+        return null;
+    }
+
+    //
+    @Override
     public void updateClub(ClubsDto clubDto) {
-        Clubs club = clubRepository.findById(clubDto.getId()).orElseThrow(() -> new RuntimeException("Club not found"));
+        Clubs club = clubRepository.findById(clubDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid club Id:" + clubDto.getId()));
         club.setTitle(clubDto.getTitle());
         club.setDescription(clubDto.getDescription());
         club.setEmail(clubDto.getEmail());
         clubRepository.save(club);
-    }
-
-    private Clubs mapToClub(ClubsDto clubDto) {
-        return new Clubs(
-                clubDto.getId(),
-                clubDto.getTitle(),
-                clubDto.getDescription(),
-                clubDto.getEmail(),
-                clubDto.getUpdatedOn(),
-                clubDto.getCreatedOn()
-        );
     }
 
     private ClubsDto mapToDtoClub(Clubs club) {
