@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ClubRepository extends JpaRepository<Clubs, Long> {
     Optional<Clubs> findByTitle(String title);
+
 }

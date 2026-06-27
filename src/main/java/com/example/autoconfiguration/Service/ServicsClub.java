@@ -10,4 +10,8 @@ public interface ServicsClub {
         List<ClubsDto> findAllClubs();
 
         Clubs saveClub(Clubs club);
+
+        ClubsDto findClubById(long clubId);
+
+        void updateClub(ClubsDto club);
 }
