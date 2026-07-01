@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${club.title} + ' - Club Details'">Club Details - Club Manager</title>
     <!-- Local Static Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="/css/bootstrap.min.css">
-    
+
     <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         body {
             font-family: 'Outfit', sans-serif;
@@ -20,7 +22,7 @@
             min-height: 100vh;
             padding-bottom: 5rem;
         }
-        
+
         .navbar-brand {
             font-weight: 700;
             letter-spacing: -0.5px;
@@ -51,10 +53,12 @@
                 transform: scale(0.95);
                 box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
             }
+
             70% {
                 transform: scale(1);
                 box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
             }
+
             100% {
                 transform: scale(0.95);
                 box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
@@ -187,6 +191,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Header / Navbar -->
@@ -212,7 +217,8 @@
 
                 <!-- Navigation link back -->
                 <div class="mb-3">
-                    <a th:href="@{/clubs}" class="text-decoration-none d-inline-flex align-items-center gap-1" style="color: #94a3b8; transition: color 0.2s;">
+                    <a th:href="@{/clubs}" class="text-decoration-none d-inline-flex align-items-center gap-1"
+                        style="color: #94a3b8; transition: color 0.2s;">
                         <span>&larr;</span> Back to Directory
                     </a>
                 </div>
@@ -227,7 +233,9 @@
                         <div class="col-md">
                             <div class="d-flex flex-wrap gap-2 align-items-center mb-2">
                                 <span class="badge-id" th:text="'Club ID: #' + ${club.id}">Club ID: #1</span>
-                                <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded" style="font-size: 0.8rem; font-weight: 600;">Active</span>
+                                <span
+                                    class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded"
+                                    style="font-size: 0.8rem; font-weight: 600;">Active</span>
                             </div>
                             <h1 class="club-title" th:text="${club.title}">Real Madrid</h1>
                             <p class="text-muted mb-0" th:text="${club.email}">contact@club.com</p>
@@ -254,14 +262,16 @@
                             <div class="info-box">
                                 <div class="section-label">Official Contact</div>
                                 <div class="meta-value">
-                                    <a th:href="'mailto:' + ${club.email}" class="text-info text-decoration-none" th:text="${club.email}">contact@club.com</a>
+                                    <a th:href="'mailto:' + ${club.email}" class="text-info text-decoration-none"
+                                        th:text="${club.email}">contact@club.com</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="info-box">
                                 <div class="section-label">Created Date</div>
-                                <div class="meta-value" th:text="${club.CreatedOn != null ? #temporals.format(club.CreatedOn, 'MMM dd, yyyy') : 'N/A'}">
+                                <div class="meta-value"
+                                    th:text="${club.CreatedOn != null ? #temporals.format(club.CreatedOn, 'MMM dd, yyyy') : 'N/A'}">
                                     Jan 01, 2026
                                 </div>
                             </div>
@@ -269,7 +279,8 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="info-box">
                                 <div class="section-label">Last Updated</div>
-                                <div class="meta-value" th:text="${club.UpdatedOn != null ? #temporals.format(club.UpdatedOn, 'MMM dd, yyyy') : 'N/A'}">
+                                <div class="meta-value"
+                                    th:text="${club.UpdatedOn != null ? #temporals.format(club.UpdatedOn, 'MMM dd, yyyy') : 'N/A'}">
                                     Jan 02, 2026
                                 </div>
                             </div>
@@ -284,6 +295,7 @@
                         <a th:href="@{/clubs}" class="btn-back">
                             Back to Directory
                         </a>
+
                     </div>
                 </div>
 
@@ -294,4 +306,5 @@
     <!-- Local Static Bootstrap Bundle JS -->
     <script th:src="@{/js/bootstrap.bundle.min.js}" src="/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

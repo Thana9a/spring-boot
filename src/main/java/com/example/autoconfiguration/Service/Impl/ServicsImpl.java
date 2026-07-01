@@ -4,7 +4,7 @@ import com.example.autoconfiguration.Model.Clubs;
 import com.example.autoconfiguration.Repository.ClubRepository;
 import com.example.autoconfiguration.Service.ServicsClub;
 import com.example.autoconfiguration.dto.ClubsDto;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,14 +56,21 @@ public class ServicsImpl implements ServicsClub {
 
     // it for mapClubsDtoClubs to Clubs it mean we create a new box for Clubs and
     // put data from ClubDto to Clubs
-    private Clubs mapToClub(ClubsDto clubDto) {
-        return new Clubs(
-                clubDto.getId(),
-                clubDto.getTitle(),
-                clubDto.getDescription(),
-                clubDto.getEmail(),
-                clubDto.getUpdatedOn(),
-                clubDto.getCreatedOn());
+    // private Clubs mapToClub(ClubsDto clubDto) {
+    // return new Clubs(
+    // clubDto.getId(),
+    // clubDto.getTitle(),
+    // clubDto.getDescription(),
+    // clubDto.getEmail(),
+    // clubDto.getUpdatedOn(),
+    // clubDto.getCreatedOn());
+    // }
+
+    // delete
+    @Override
+    public String deleteClub(Long clubId) {
+        clubRepository.deleteById(clubId);
+        return "redirect:/clubs";
     }
 
     // it for mapClubs to ClubsDto it mean we create a new box for ClubsDto and put

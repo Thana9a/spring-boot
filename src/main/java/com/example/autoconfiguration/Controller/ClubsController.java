@@ -2,7 +2,6 @@ package com.example.autoconfiguration.Controller;
 
 import com.example.autoconfiguration.Model.Clubs;
 import com.example.autoconfiguration.Service.ServicsClub;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ClubsController {
@@ -20,7 +18,6 @@ public class ClubsController {
     private ServicsClub servicsClub;
 
     // contstructor
-    @Autowired
     public ClubsController(ServicsClub servicsClub) {
         this.servicsClub = servicsClub;
     }
@@ -71,6 +68,13 @@ public class ClubsController {
         ClubsDto club = servicsClub.findClubById(clubId);
         model.addAttribute("club", club);
         return "clubs.detail";
+    }
+
+    // Delete
+    @GetMapping("/club/{clubId}/delete")
+    public String deleteClub(@PathVariable("clubId") Long clubId) {
+        servicsClub.deleteClub(clubId);
+        return "redirect:/clubs";
     }
 
 }
