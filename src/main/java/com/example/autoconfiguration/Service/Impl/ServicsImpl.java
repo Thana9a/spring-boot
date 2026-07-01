@@ -4,6 +4,7 @@ import com.example.autoconfiguration.Model.Clubs;
 import com.example.autoconfiguration.Repository.ClubRepository;
 import com.example.autoconfiguration.Service.ServicsClub;
 import com.example.autoconfiguration.dto.ClubsDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,26 +19,39 @@ public class ServicsImpl implements ServicsClub {
         this.clubRepository = clubRepository;
     }
 
+    // main of this file
+    // retrive all data on database one by one and change to dto and then sent to
+    // client by controller
     @Override
     public List<ClubsDto> findAllClubs() {
-        List<Clubs> clubs = clubRepository.findAll();// create obj array list(emty data) and then go run build in
-                                                     // methods to clubRepo findall() and then it assign to obj
-        return clubs.stream()// return
+        List<Clubs> clubs = clubRepository.findAll();
+        return clubs.stream()
                 .map(this::mapToDtoClub)
                 .collect(Collectors.toList());
     }
 
+    // this create for create new clubs in db and save on db
     @Override
-    public Clubs saveClub(Clubs club) {
-        return clubRepository.save(club);
+    public Clubs saveClub(Clubs club) {// Clubs club it is Dependency Injection it like create a new box for ervery
+                                       // field to box (clubs) not
+        return clubRepository.save(club);//
     }
 
-    @Override // this path is implement about the service here in kitchen have chef ready to
-              // cook for the meun
-    public ClubsDto findClubsById(Long clubId) {// here what it will be to retrive the data from database and it go to
-                                                // DTO
+    @Override
+    public ClubsDto findClubById(long clubId) {
         Clubs club = clubRepository.findById(clubId).get();
         return mapToDtoClub(club);
+    }
+
+    @Override
+    public ClubsDto findClubsById(Long clubId) {
+        return findClubById(clubId);
+    }
+
+    @Override
+    public String deleteClub(Long clubId) {
+        clubRepository.deleteById(clubId);
+        return "redirect:/clubs";
     }
 
     @Override
@@ -54,7 +68,6 @@ public class ServicsImpl implements ServicsClub {
         return null;
     }
 
-    //
     @Override
     public void updateClub(ClubsDto clubDto) {
         Clubs club = clubRepository.findById(clubDto.getId())
@@ -65,6 +78,18 @@ public class ServicsImpl implements ServicsClub {
         clubRepository.save(club);
     }
 
+    private Clubs mapToClub(ClubsDto clubDto) {
+        return new Clubs(
+                clubDto.getId(),
+                clubDto.getTitle(),
+                clubDto.getDescription(),
+                clubDto.getEmail(),
+                clubDto.getUpdatedOn(),
+                clubDto.getCreatedOn());
+    }
+
+    // it for mapClubs to ClubsDto it mean we create a new box for ClubsDto and put
+    // data from Clubs to ClubsDto
     private ClubsDto mapToDtoClub(Clubs club) {
         return ClubsDto.builder()
                 .id(club.getId())
@@ -76,4 +101,5 @@ public class ServicsImpl implements ServicsClub {
                 .build();
 
     }
+
 }

@@ -26,7 +26,7 @@ public class ClubsController {
 
     @GetMapping("/clubs")
     public String listClubs(Model model) {
-        List<ClubsDto> clubs = servicsClub.findAllClubs();
+        List<ClubsDto> clubs = servicsClub.findAllClubs();// service
         model.addAttribute("clubs", clubs);
         return "clubs";
     }
@@ -85,4 +85,18 @@ public class ClubsController {
         return "redirect:/clubs";
     }
 
+    // list detail
+    @GetMapping("/club/{clubId}")
+    public String clubDetail(@PathVariable("clubId") Long clubId, Model model) {
+        ClubsDto club = servicsClub.findClubById(clubId);
+        model.addAttribute("club", club);
+        return "clubs.detail";
+    }
+
+    // Delete
+    @GetMapping("/club/{clubId}/delete")
+    public String deleteClub(@PathVariable("clubId") Long clubId) {
+        servicsClub.deleteClub(clubId);
+        return "redirect:/clubs";
+    }
 }
