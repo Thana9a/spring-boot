@@ -1,9 +1,9 @@
-# syntax=docker/dockerfile:1
+# take image from docker hub
 
-################################################################################
-# Stage 1: Download dependencies (cached separately for faster rebuilds)
-FROM eclipse-temurin:21-jdk-jammy AS deps
+FROM eclipse-temurin:21-jdk-jammy AS deps  
+#the eclipse is name repo and 21 jdk jammy is tag (as is change name to deps) os that can call dependency
 
+# this is work dir where are you work on the container (so now you work on build folder)
 WORKDIR /build
 
 COPY --chmod=0755 mvnw mvnw
@@ -40,6 +40,8 @@ RUN java -Djarmode=layertools -jar target/app.jar extract --destination target/e
 ################################################################################
 # Stage 4: Final minimal runtime image (this is the "demo-app" image)
 FROM eclipse-temurin:21-jre-jammy AS final
+
+WORKDIR /app
 
 # Create a non-privileged user for security best practices
 ARG UID=10001

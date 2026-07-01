@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ClubsController {
@@ -26,7 +27,7 @@ public class ClubsController {
 
     @GetMapping("/clubs")
     public String listClubs(Model model) {
-        List<ClubsDto> clubs = servicsClub.findAllClubs();
+        List<ClubsDto> clubs = servicsClub.findAllClubs();// service
         model.addAttribute("clubs", clubs);
         return "clubs";
     }
@@ -58,9 +59,18 @@ public class ClubsController {
 
     @PostMapping("/clubs/{clubId}/edit")
     public String updateClub(@PathVariable("clubId") Long clubId,
-                             @ModelAttribute("club") ClubsDto club) {
+            @ModelAttribute("club") ClubsDto club) {
         club.setId(clubId);
         servicsClub.updateClub(club);
         return "redirect:/clubs";
     }
+
+    // list detail
+    @GetMapping("/club/{clubId}")
+    public String clubDetail(@PathVariable("clubId") Long clubId, Model model) {
+        ClubsDto club = servicsClub.findClubById(clubId);
+        model.addAttribute("club", club);
+        return "clubs.detail";
+    }
+
 }

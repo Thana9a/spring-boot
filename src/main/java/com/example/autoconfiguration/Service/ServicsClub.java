@@ -5,7 +5,6 @@ import com.example.autoconfiguration.dto.ClubsDto;
 
 import java.util.List;
 
-
 public interface ServicsClub {
         List<ClubsDto> findAllClubs();
 
@@ -14,4 +13,5 @@ public interface ServicsClub {
         ClubsDto findClubById(long clubId);
 
         void updateClub(ClubsDto club);
+
 }

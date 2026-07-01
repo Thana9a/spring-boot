@@ -209,7 +209,9 @@
                         </div>
                         
                         <!-- Club title & description -->
-                        <h3 class="club-title h5" th:text="${club.title}">Real Madrid</h3>
+                        <h3 class="club-title h5">
+                            <a th:href="@{/club/{clubId}(clubId=${club.id})}" class="text-decoration-none text-white" th:text="${club.title}" style="transition: color 0.2s;" onmouseover="this.style.color='#a5b4fc'" onmouseout="this.style.color='#ffffff'">Real Madrid</a>
+                        </h3>
                         <p class="club-description flex-grow-1" th:text="${club.description}">
                             Description placeholder text.
                         </p>
@@ -234,10 +236,21 @@
                                 </div>
                             </div>
 
-                            <div class="d-grid mt-3">
-                                <a th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}" class="btn btn-edit-club rounded-pill text-center py-2">
-                                    Edit Club
-                                </a>
+                            <div class="row g-2 mt-3">
+                                <div class="col-6">
+                                    <div class="d-grid">
+                                        <a th:href="@{/club/{clubId}(clubId=${club.id})}" class="btn btn-primary rounded-pill text-center py-2" style="font-size: 0.825rem; font-weight: 600; padding: 0.5rem 0.75rem;">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-grid">
+                                        <a th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}" class="btn btn-edit-club rounded-pill text-center py-2" style="padding: 0.5rem 0.75rem;">
+                                            Edit Club
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
